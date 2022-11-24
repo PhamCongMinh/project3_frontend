@@ -1,15 +1,15 @@
-import { Breadcrumb, Layout } from 'antd'
-import { Content, Footer } from 'antd/lib/layout/layout'
+import { Layout } from 'antd'
 import CustomHeader from '../components/layouts/header'
+import ImagesCarousel from '../components/elements/carousel'
+import { Content, Footer } from 'antd/lib/layout/layout'
+import CustomContent from '../components/layouts/content'
 
 export default function Home() {
   return (
     <Layout>
-      <Layout>
-        <CustomHeader />
-        {/*<Content className="site-layout" style={{ padding: '0 50px' }}></Content>*/}
-        {/*<Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>*/}
-      </Layout>
+      <CustomHeader />
+      <CustomContent />
+      {/*<Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>*/}
     </Layout>
   )
 }
