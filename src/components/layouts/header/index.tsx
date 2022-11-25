@@ -11,7 +11,7 @@ export default function CustomHeader() {
   return (
     <Header className={styles.header}>
       <Row>
-        <Col span={5} style={{ display: 'flex', alignItems: 'center', paddingLeft: 110 }}>
+        <Col span={5} style={{ display: 'flex', alignItems: 'center', paddingLeft: 135 }}>
           <Typography>
             <Text className={styles.logo_text}>RentHouse</Text>
           </Typography>
