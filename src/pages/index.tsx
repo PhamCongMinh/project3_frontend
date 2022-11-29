@@ -1,14 +1,6 @@
-import { Layout } from 'antd'
-import CustomHeader from '../components/layouts/header'
-import CustomContent from '../components/layouts/content'
-import CustomFooter from '../components/layouts/footer'
+import { Routes } from '../routes/constant'
+import Link from 'next/link'
 
 export default function Home() {
-  return (
-    <Layout>
-      <CustomHeader />
-      <CustomContent />
-      <CustomFooter />
-    </Layout>
-  )
+  return <Link href={Routes.HOME} replace></Link>
 }

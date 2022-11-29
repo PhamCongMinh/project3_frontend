@@ -8,7 +8,7 @@ import ListIcon from './components/list-icon'
 
 export default function CustomContent() {
   return (
-    <Content className="site-layout" style={{ padding: '0px', margin: '0px' }}>
+    <div>
       <ImagesCarousel />
       <ListIcon />
       <IntroductionRent />
@@ -16,6 +16,6 @@ export default function CustomContent() {
       <ListHouse />
       <Divider style={{ marginTop: 100 }} />
       <IntroductionRentout />
-    </Content>
+    </div>
   )
 }
