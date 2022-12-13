@@ -1,9 +1,14 @@
 import { MenuProps } from 'antd'
 
 export enum FilterText {
-  ADDRESS = 'Địa điểm',
-  PRICE = 'Giá',
-  AREA = 'Diện tích'
+
+  MINPRICE = 'Giá thấp nhất',
+  MAXPRICE = 'Giá lớn nhất',
+  MINAREA = 'Diện tích nhỏ nhất',
+  MAXAREA = 'Diện tích lớn nhất',
+  CITY = 'Thành phố',
+  DISTRICT = 'Quận',
+  COMMUNE = 'Phường'
 }
 
 export const SortedByItems: MenuProps['items'] = [

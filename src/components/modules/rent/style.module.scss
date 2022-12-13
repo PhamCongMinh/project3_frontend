@@ -17,15 +17,21 @@
 }
 
 .input {
-    min-width: 250px;
-    min-height: 47px;
+  min-width: 250px;
+  min-height: 47px;
 }
 
 
 .button {
-    width: 47px !important;
-    height: 47px;
-    padding: 0px !important;
+  width: 47px !important;
+  height: 47px;
+  padding: 0px !important;
+}
+
+.button_option {
+  min-width: 100px;
+  min-height: 47px;
+  color: #6e5555;
 }
 
 .content {
