@@ -13,7 +13,9 @@ export default function CustomHeader() {
       <Row>
         <Col span={5} style={{ display: 'flex', alignItems: 'center', paddingLeft: 135 }}>
           <Typography>
-            <Text className={styles.logo_text}>RentHouse</Text>
+            <a href="http://localhost:3000/home">
+              <Text className={styles.logo_text}>RentHouse</Text>
+            </a>
           </Typography>
         </Col>
         <Col span={10} offset={9}>
