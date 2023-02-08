@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { Button, Col, Input, message, Row, Typography, Upload, UploadProps } from 'antd'
 import produce from 'immer'
-
-import styles from './style.module.scss'
 import { UploadOutlined } from '@ant-design/icons'
+import { serialize } from 'object-to-formdata'
+import { Button, Col, Input, message, Row, Typography, Upload, UploadProps } from 'antd'
+
 import { AxiosService } from '../../../../../../../utils/axios'
-import { RentNews } from '../../../../../../../types'
+import styles from './style.module.scss'
 
 const { TextArea } = Input
-
 const { Text } = Typography
 
 interface ICreateRentalNews {
@@ -21,7 +20,6 @@ interface ICreateRentalNews {
   specificAddress?: string
   title: string
   description: string
-  // imageUrl?: string[]
 }
 
 const initialState: ICreateRentalNews = {
@@ -36,25 +34,9 @@ const initialState: ICreateRentalNews = {
   description: ''
 }
 
-const props: UploadProps = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text'
-  },
-  onChange(info) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList)
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`)
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`)
-    }
-  }
-}
 export default function RentOutForm() {
   const [state, setState] = useState<ICreateRentalNews>(initialState)
+  const [image, setImage] = useState<any>()
   const axiosService = new AxiosService()
   const handleChange = (
     key: string,
@@ -67,21 +49,32 @@ export default function RentOutForm() {
       })
     )
   }
-  const handleSubmit = async () => {
-    console.log(state)
-    try {
-      const data = {
-        area: 60,
-        city: 'Hà Nội',
-        commune: 'Tương Mai',
-        description: 'Test',
-        district: 'Hoàng Mai',
-        pricePerMonth: 6000000,
-        specificAddress: 'Test',
-        street: 'Trương Định',
-        title: 'Test'
+
+  const props: UploadProps = {
+    name: 'file',
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    headers: {
+      authorization: 'authorization-text'
+    },
+    onChange(info) {
+      if (info.file.status !== 'uploading') {
+        console.log(info.file, info.fileList)
       }
-      const response = await axiosService.post('/rent-out', { body: data })
+      if (info.file.status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully`)
+        setImage(info.file.originFileObj)
+      } else if (info.file.status === 'error') {
+        message.error(`${info.file.name} file upload failed.`)
+      }
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const formData = serialize(state)
+      formData.append('image', image)
+      console.log(formData)
+      const response = await axiosService.post('/rent-out', formData)
       console.log(response)
     } catch (error) {
       alert('Tạo tin thất bại, vui lòng kiểm tra lại thông tin trước khi thử lại')

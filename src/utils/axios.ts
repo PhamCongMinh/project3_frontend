@@ -10,11 +10,11 @@ export class AxiosService {
       responseType: 'json',
       baseURL: 'http://localhost:5000/api/v1' || '',
       headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
+        Accept: 'multipart/form-data',
         Authorization:
           'Bearer ' +
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTMxNTFkMGJhNDNjZjFkZTJlMDMzNSIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlIjoicmVudGVyIiwiaWF0IjoxNjc1ODM5MTE4LCJleHAiOjE2NzU4NDAwMTh9.fpcAIGFENbFhBBC66Atv5Jt2A-ttztvJXDxsoN2nDow'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTMxNTFkMGJhNDNjZjFkZTJlMDMzNSIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlIjoicmVudGVyIiwiaWF0IjoxNjc1ODQ2NzY0LCJleHAiOjE2NzU4NDc2NjR9.L8FG6jAMe9rXAR5BiYEVtfhki2RPcbQ1lSw2AYaypiA'
       }
     })
     service.interceptors.request.use(this.handleInterceptRequest)

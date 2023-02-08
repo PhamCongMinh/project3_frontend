@@ -20,7 +20,7 @@ export default function CreateRentalnews() {
         <Breadcrumb.Item>Đăng tin mới</Breadcrumb.Item>
       </Breadcrumb>
       <Text className={styles.title1}>Đăng tin mới</Text>
-      <Divider style={{ width: 1350 }}></Divider>
+      <Divider style={{ width: 1350, margin: 0 }}></Divider>
       <Row>
         <Col span={16}>
           <RentOutForm />
