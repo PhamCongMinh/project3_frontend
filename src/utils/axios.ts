@@ -3,15 +3,15 @@ import axios, { AxiosRequestConfig, ResponseType } from 'axios'
 export class AxiosService {
   readonly service
 
-  constructor() {
+  constructor(contentType: string) {
     // const tokenAccess = StorageUtils.getToken()
     const service = axios.create({
       withCredentials: false,
       responseType: 'json',
       baseURL: 'http://localhost:5000/api/v1' || '',
       headers: {
-        'Content-Type': 'multipart/form-data',
-        Accept: 'multipart/form-data',
+        'Content-Type': contentType,
+        Accept: contentType,
         Authorization:
           'Bearer ' +
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzZTMxNTFkMGJhNDNjZjFkZTJlMDMzNSIsImVtYWlsIjoidGVzdEBnbWFpbC5jb20iLCJyb2xlIjoicmVudGVyIiwiaWF0IjoxNjc1ODQ2NzY0LCJleHAiOjE2NzU4NDc2NjR9.L8FG6jAMe9rXAR5BiYEVtfhki2RPcbQ1lSw2AYaypiA'
@@ -67,4 +67,4 @@ export class AxiosService {
   }
 }
 
-export default new AxiosService()
+export default AxiosService

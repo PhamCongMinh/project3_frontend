@@ -17,7 +17,7 @@ type IProps = {
 }
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   const url = parseUrlToJson(context)
-  const axiosService = new AxiosService()
+  const axiosService = new AxiosService('application/json')
   const response = await axiosService.get('/rent', { params: url })
   const data: RentNews[] = response['data']
 

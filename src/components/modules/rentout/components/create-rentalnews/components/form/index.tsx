@@ -37,7 +37,7 @@ const initialState: ICreateRentalNews = {
 export default function RentOutForm() {
   const [state, setState] = useState<ICreateRentalNews>(initialState)
   const [image, setImage] = useState<any>()
-  const axiosService = new AxiosService()
+  const axiosService = new AxiosService('multipart/form-data')
   const handleChange = (
     key: string,
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>
