@@ -6,6 +6,7 @@ import { Button, Col, Input, message, Row, Typography, Upload, UploadProps } fro
 
 import { AxiosService } from '../../../../../../../utils/axios'
 import styles from './style.module.scss'
+import { useSelector } from 'react-redux'
 
 const { TextArea } = Input
 const { Text } = Typography
@@ -37,7 +38,9 @@ const initialState: ICreateRentalNews = {
 export default function RentOutForm() {
   const [state, setState] = useState<ICreateRentalNews>(initialState)
   const [image, setImage] = useState<any>()
-  const axiosService = new AxiosService('multipart/form-data')
+  const jwt = useSelector((state: any) => state.auth.jwt)
+  const axiosService = new AxiosService('multipart/form-data', jwt)
+
   const handleChange = (
     key: string,
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>

@@ -1,15 +1,27 @@
-import { Button, Form, Input, Space, Typography } from 'antd'
-import styles from './style.module.scss'
-import { SearchOutlined } from '@ant-design/icons'
 import React, { useState } from 'react'
 import produce from 'immer'
+import { useDispatch } from 'react-redux'
+import { Button, Form, Input, Space, Typography } from 'antd'
 import AxiosService from '../../../../../utils/axios'
+import { authSliceActions } from '../../../../../store/auth/authSlice'
+
+import styles from './style.module.scss'
+import { useRouter } from 'next/router'
 
 const { Text } = Typography
 
 interface ISignInForm {
   email: string
   password: string
+}
+
+interface IAuth {
+  jwt: string
+  userId: string
+  email: string
+  username: string
+  numberPhone: string
+  role: string
 }
 
 const initialState: ISignInForm = {
@@ -20,6 +32,8 @@ const initialState: ISignInForm = {
 export default function SignInForm() {
   const [state, setState] = useState<ISignInForm>(initialState)
   const axiosService = new AxiosService('application/json')
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   const handleChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev: ISignInForm) =>
@@ -33,8 +47,21 @@ export default function SignInForm() {
   const handleSubmit = async () => {
     try {
       const response = await axiosService.post('/auth/login', state)
-      console.log(response)
-      window.location.href = '/rent'
+      const userData: IAuth = {
+        jwt: response.data.access_token,
+        userId: response.data._id,
+        email: response.data.email,
+        username: response.data.username,
+        numberPhone: response.data.numberPhone,
+        role: response.data.role
+      }
+
+      // @ts-ignore
+      if (response.statusCode === 200) {
+        dispatch(authSliceActions.logIn(userData))
+      }
+
+      router.push('/rent')
     } catch (error) {
       alert('Đăng nhập thất bại, vui lòng kiểm tra lại thông tin trước khi thử lại')
       console.log(error)
@@ -58,7 +85,7 @@ export default function SignInForm() {
         </Form.Item>
 
         <Form.Item>
-          <Input placeholder="Mật khẩu" onChange={e => handleChange('password', e)} />
+          <Input.Password placeholder="Mật khẩu" onChange={e => handleChange('password', e)} />
         </Form.Item>
 
         <Form.Item>

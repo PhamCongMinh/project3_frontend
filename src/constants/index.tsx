@@ -2,27 +2,27 @@ import { MenuProps } from 'antd'
 
 export const menuItems: MenuProps['items'] = [
   {
-    label: <a href="http://localhost:3000/home">Trang chủ</a>,
-    key: '1'
+    label: <a>Trang chủ</a>,
+    key: 'home'
   },
   {
-    label: <a href="http://localhost:3000/rent">Tìm trọ</a>,
-    key: '2'
+    label: <a>Tìm trọ</a>,
+    key: 'rent'
   },
   {
-    label: <a href="http://localhost:3000/rentout">Cho thuê</a>,
-    key: '3'
+    label: <a>Cho thuê</a>,
+    key: 'rentout'
   },
   {
     label: 'Blog',
-    key: '4'
+    key: 'blog'
   },
   {
-    label: <a href="http://localhost:3000/signup">Đăng kí</a>,
-    key: '5'
+    label: <a>Đăng kí</a>,
+    key: 'signup'
   },
   {
-    label: <a href="http://localhost:3000/signin">Đăng nhập</a>,
-    key: '6'
+    label: <a>Đăng nhập</a>,
+    key: 'signin'
   }
 ]

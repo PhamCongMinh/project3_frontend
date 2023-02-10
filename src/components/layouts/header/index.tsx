@@ -1,13 +1,19 @@
 import { Col, Menu, Row, Typography } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import ImagesCarousel from '../../elements/carousel'
 import { menuItems } from '../../../constants'
 
 import styles from './style.module.scss'
+import { useRouter } from 'next/router'
 
 const { Text } = Typography
 
 export default function CustomHeader() {
+  const router = useRouter()
+
+  const handleClickMenuItem = (route: string) => {
+    router.push(route)
+  }
+
   return (
     <Header className={styles.header}>
       <Row>
@@ -19,7 +25,14 @@ export default function CustomHeader() {
           </Typography>
         </Col>
         <Col span={10} offset={9}>
-          <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} items={menuItems} className={styles.menu} />
+          <Menu
+            theme="light"
+            mode="horizontal"
+            defaultSelectedKeys={['home']}
+            items={menuItems}
+            className={styles.menu}
+            onClick={({ key }) => handleClickMenuItem(key)}
+          />
         </Col>
       </Row>
     </Header>
