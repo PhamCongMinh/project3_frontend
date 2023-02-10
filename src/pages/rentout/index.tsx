@@ -1,10 +1,13 @@
-import { Layout } from 'antd'
+import { Alert, Layout } from 'antd'
 import CustomHeader from '../../components/layouts/header'
 import { Content } from 'antd/lib/layout/layout'
 import CustomFooter from '../../components/layouts/footer'
 import SignUpContent from '../../components/modules/signup'
 import SignInContent from '../../components/modules/signin'
 import RentOutContent from '../../components/modules/rentout'
+import React from 'react'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 export default function RentOut() {
   return (

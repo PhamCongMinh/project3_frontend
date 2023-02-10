@@ -4,8 +4,6 @@ export class AxiosService {
   readonly service
 
   constructor(contentType: string, accessToken?: string) {
-    // const tokenAccess = StorageUtils.getToken()
-    console.log('accessToken', accessToken)
     const service = axios.create({
       withCredentials: false,
       responseType: 'json',

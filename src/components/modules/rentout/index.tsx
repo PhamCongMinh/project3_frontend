@@ -1,10 +1,14 @@
-import { Avatar, Breadcrumb, Divider, Menu, MenuProps, Space, Typography } from 'antd'
+import { Alert, Button, Menu, MenuProps, Space, Typography } from 'antd'
 import styles from './style.module.scss'
-import { AppstoreOutlined, HomeOutlined, MailOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons'
 import AvatarImage from '../../../assets/images/avatar.png'
 import Image from 'next/image'
 import React from 'react'
 import CreateRentalnews from './components/create-rentalnews'
+import { useRouter } from 'next/router'
+import { useDispatch, useSelector } from 'react-redux'
+import ManagementRentalNews from './components/management-news'
+import { authSliceActions } from '../../../store/auth/authSlice'
 
 type MenuItem = Required<MenuProps>['items'][number]
 const { Text } = Typography
@@ -23,14 +27,54 @@ function getItem(
     type
   } as MenuItem
 }
+
+const items: MenuProps['items'] = [
+  getItem('Đăng tin mới', 'createNews', <AppstoreOutlined />),
+  getItem('Quản lí tin đăng', 'managementNews', <AppstoreOutlined />),
+  getItem('Sửa thông tin cá nhân', 'editProfile', <AppstoreOutlined />),
+  getItem('Liên hệ', 'contact', <MailOutlined />),
+  getItem('Thoát', 'logout', <SettingOutlined />)
+]
+
 export default function RentOutContent() {
-  const items: MenuProps['items'] = [
-    getItem('Đăng tin mới', 'sub1', <AppstoreOutlined />),
-    getItem('Quản lí tin đăng', 'sub2', <AppstoreOutlined />),
-    getItem('Sửa thông tin cá nhân', 'sub3', <AppstoreOutlined />),
-    getItem('Liên hệ', 'sub4', <MailOutlined />),
-    getItem('Thoát', 'sub5', <SettingOutlined />)
-  ]
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const [selectedMenuItem, setSelectedMenuItem] = React.useState('createNews')
+  const jwt = useSelector((state: any) => state.auth?.user?.jwt)
+
+  const handleUserNotLogin = () => {
+    router.push('/signin')
+  }
+
+  if (!jwt) {
+    return (
+      <div>
+        <Alert
+          message="Không có quyền truy cập"
+          showIcon
+          description="Bạn phải đăng nhập để sử dụng chức năng này"
+          type="error"
+          action={
+            <Button size="small" danger>
+              Detail
+            </Button>
+          }
+          closable
+          onClose={handleUserNotLogin}
+        />
+      </div>
+    )
+  }
+
+  const handleClickMenuItem = async (key: string) => {
+    if (key === 'logout') {
+      console.log('logout')
+      await dispatch(authSliceActions.logOut())
+      router.push('/home')
+    }
+    setSelectedMenuItem(key)
+  }
+
   return (
     <div>
       <div className={styles.container}>
@@ -43,7 +87,7 @@ export default function RentOutContent() {
               </Text>
             </div>
             <Menu
-              // onClick={onClick}
+              onClick={({ key }) => handleClickMenuItem(key)}
               style={{ width: 256, height: 1020 }}
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
@@ -52,7 +96,10 @@ export default function RentOutContent() {
               className={styles.menu}
             />
           </div>
-          <CreateRentalnews />
+          {selectedMenuItem === 'createNews' && <CreateRentalnews />}
+          {selectedMenuItem === 'managementNews' && <ManagementRentalNews />}
+          {selectedMenuItem === 'editProfile' && <div>Sửa thông tin cá nhân</div>}
+          {selectedMenuItem === 'contact' && <div>Liên hệ</div>}
         </Space>
       </div>
     </div>

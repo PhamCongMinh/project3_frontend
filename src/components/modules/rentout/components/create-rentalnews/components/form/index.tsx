@@ -38,7 +38,7 @@ const initialState: ICreateRentalNews = {
 export default function RentOutForm() {
   const [state, setState] = useState<ICreateRentalNews>(initialState)
   const [image, setImage] = useState<any>()
-  const jwt = useSelector((state: any) => state.auth.jwt)
+  const jwt = useSelector((state: any) => state.auth?.user?.jwt)
   const axiosService = new AxiosService('multipart/form-data', jwt)
 
   const handleChange = (

@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { WritableDraft } from 'immer/src/types/types-external'
 
 export interface AuthState {
-  jwt?: string
-  userId?: string
-  email?: string
-  username?: string
-  role?: string
-  numberPhone?: string
+  user?: {
+    jwt?: string
+    userId?: string
+    email?: string
+    username?: string
+    role?: string
+    numberPhone?: string
+  }
 }
 
 const initialState: AuthState = {}
@@ -16,20 +19,11 @@ export const AuthSlice = createSlice({
   initialState,
   reducers: {
     logIn: (state, action) => {
-      state.jwt = action.payload.jwt
-      state.userId = action.payload.userId
-      state.email = action.payload.email
-      state.role = action.payload.role
-      state.numberPhone = action.payload.numberPhone
-      state.username = action.payload.username
+      state.user = action.payload
     },
-    logOut: state => {
-      state.jwt = undefined
-      state.userId = undefined
-      state.email = undefined
-      state.role = undefined
-      state.numberPhone = undefined
-      state.username = undefined
+
+    logOut: (state: WritableDraft<AuthState>) => {
+      state.user = {}
     },
     extraReducers: (builder: any) => {}
   }
