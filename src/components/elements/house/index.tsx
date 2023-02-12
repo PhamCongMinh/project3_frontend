@@ -12,13 +12,14 @@ interface IProps {
   title: string
   price: string
   description: string
+  onClick: () => void
 }
 
 const House: React.FC<IProps> = (props): JSX.Element => {
   const { title, price, description } = props
 
   return (
-    <div style={{ marginLeft: 150, marginBottom: 50 }}>
+    <div style={{ marginLeft: 150, marginBottom: 50 }} onClick={props.onClick}>
       <Space className={styles.space}>
         <Image src={RentOutImage} alt="House1" style={{ width: 350, height: 250 }} />
         <div className={styles.container}>

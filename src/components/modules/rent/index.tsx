@@ -10,6 +10,7 @@ import SubContent from './components/subcontent'
 import { RentNews } from '../../../types'
 
 import styles from './style.module.scss'
+import DetailHouseContent from '../detail-house'
 
 const { Text } = Typography
 
@@ -44,6 +45,8 @@ const initialState: TSearch = {}
 const RentContent: React.FC<IProps> = (props): JSX.Element => {
   const [extendedFilter, setExtendedFilter] = useState<boolean>(false)
   const [state, setState] = useState<TSearch>(initialState)
+  const [isOpenDetailHouse, setIsOpenDetailHouse] = useState<boolean>(false)
+  const [detailHouse, setDetailHouse] = useState<RentNews>({} as RentNews)
 
   useEffect(() => {
     setState(props.appliedFilter)
@@ -70,87 +73,103 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
     props.handleSearch(state)
   }, [state])
 
+  const handleClickHouseDetail = useCallback((rentNews: RentNews) => {
+    setDetailHouse(rentNews)
+    setIsOpenDetailHouse(true)
+    console.log('rentNews', rentNews)
+  }, [])
+
+  const handleClickBack = useCallback(() => {
+    setIsOpenDetailHouse(false)
+  }, [])
+
   return (
-    <div className={styles.container}>
-      <Space className={styles.filter}>
-        <Input
-          placeholder={FilterText.CITY}
-          className={styles.input}
-          value={state?.city}
-          onChange={e => handleChangeInput(inputType.CITY, e)}
-        />
-        <Input
-          placeholder={FilterText.DISTRICT}
-          className={styles.input}
-          value={state?.district}
-          onChange={e => handleChangeInput(inputType.DISTRICT, e)}
-        />
-        <Input
-          placeholder={FilterText.COMMUNE}
-          className={styles.input}
-          value={state?.commune}
-          onChange={e => handleChangeInput(inputType.COMMUNE, e)}
-        />
-        <Input
-          placeholder={FilterText.MINPRICE}
-          className={styles.input}
-          value={state?.minPricePerMonth}
-          onChange={e => handleChangeInput(inputType.MINPRICE, e)}
-        />
-        <Button className={styles.button_option} onClick={handleClickMoreOptions}>
-          More Options
-        </Button>
-        <Button
-          icon={<Image src={SearchIcon} alt="search" style={{ width: 45, height: 45 }} />}
-          className={styles.button}
-          onClick={handleClickSearch}
-        />
-      </Space>
+    <div>
+      {isOpenDetailHouse === false && (
+        <div className={styles.container}>
+          <Space className={styles.filter}>
+            <Input
+              placeholder={FilterText.CITY}
+              className={styles.input}
+              value={state?.city}
+              onChange={e => handleChangeInput(inputType.CITY, e)}
+            />
+            <Input
+              placeholder={FilterText.DISTRICT}
+              className={styles.input}
+              value={state?.district}
+              onChange={e => handleChangeInput(inputType.DISTRICT, e)}
+            />
+            <Input
+              placeholder={FilterText.COMMUNE}
+              className={styles.input}
+              value={state?.commune}
+              onChange={e => handleChangeInput(inputType.COMMUNE, e)}
+            />
+            <Input
+              placeholder={FilterText.MINPRICE}
+              className={styles.input}
+              value={state?.minPricePerMonth}
+              onChange={e => handleChangeInput(inputType.MINPRICE, e)}
+            />
+            <Button className={styles.button_option} onClick={handleClickMoreOptions}>
+              More Options
+            </Button>
+            <Button
+              icon={<Image src={SearchIcon} alt="search" style={{ width: 45, height: 45 }} />}
+              className={styles.button}
+              onClick={handleClickSearch}
+            />
+          </Space>
 
-      {extendedFilter === true && (
-        <Space className={styles.filter}>
-          <Input
-            placeholder={FilterText.MAXPRICE}
-            className={styles.input}
-            value={state?.maxPricePerMonth}
-            onChange={e => handleChangeInput(inputType.MAXPRICE, e)}
-          />
-          <Input
-            placeholder={FilterText.MINAREA}
-            className={styles.input}
-            value={state?.minArea}
-            onChange={e => handleChangeInput(inputType.MINAREA, e)}
-          />
-          <Input
-            placeholder={FilterText.MAXAREA}
-            className={styles.input}
-            value={state?.maxArea}
-            onChange={e => handleChangeInput(inputType.MAXAREA, e)}
-          />
-        </Space>
-      )}
-
-      <Divider style={{ marginTop: 10 }} />
-
-      <Space className={styles.content}>
-        <div style={{ minWidth: 1008, textAlign: 'center' }}>
-          {props.data.length !== 0 ? (
-            props.data.map(rentNews => (
-              <House
-                key={rentNews._id}
-                title={rentNews.title}
-                price={rentNews.pricePerMonth.toString()}
-                description={rentNews.description}
+          {extendedFilter === true && (
+            <Space className={styles.filter}>
+              <Input
+                placeholder={FilterText.MAXPRICE}
+                className={styles.input}
+                value={state?.maxPricePerMonth}
+                onChange={e => handleChangeInput(inputType.MAXPRICE, e)}
               />
-            ))
-          ) : (
-            <Text className={styles.text}>{'Dữ liệu không tồn tại'}</Text>
+              <Input
+                placeholder={FilterText.MINAREA}
+                className={styles.input}
+                value={state?.minArea}
+                onChange={e => handleChangeInput(inputType.MINAREA, e)}
+              />
+              <Input
+                placeholder={FilterText.MAXAREA}
+                className={styles.input}
+                value={state?.maxArea}
+                onChange={e => handleChangeInput(inputType.MAXAREA, e)}
+              />
+            </Space>
           )}
+
+          <Divider style={{ marginTop: 10 }} />
+
+          <Space className={styles.content}>
+            <div style={{ minWidth: 1008, textAlign: 'center' }}>
+              {props.data.length !== 0 ? (
+                props.data.map(rentNews => (
+                  <House
+                    key={rentNews._id}
+                    title={rentNews.title}
+                    price={rentNews.pricePerMonth.toString()}
+                    description={rentNews.description}
+                    onClick={() => handleClickHouseDetail(rentNews)}
+                  />
+                ))
+              ) : (
+                <Text className={styles.text}>{'Dữ liệu không tồn tại'}</Text>
+              )}
+            </div>
+            <div style={{ width: 550, display: 'flex', justifyContent: 'center' }}>
+              <SubContent />
+            </div>
+          </Space>
         </div>
-        <div style={{ width: 550, display: 'flex', justifyContent: 'center' }}>
-          <SubContent />
-        </div>
-      </Space>
+      )}
+      {isOpenDetailHouse === true && <DetailHouseContent rentNews={detailHouse} handleClickBack={handleClickBack} />}
     </div>
   )
 }
