@@ -1,14 +1,16 @@
 import { Col, Menu, Row, Typography } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { menuItems } from '../../../constants'
+import { menuItems, menuItemsAfterLogin } from '../../../constants'
 
 import styles from './style.module.scss'
 import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 const { Text } = Typography
 
 export default function CustomHeader() {
   const router = useRouter()
+  const jwt = useSelector((state: any) => state.auth?.user?.jwt)
 
   const handleClickMenuItem = (route: string) => {
     router.push(route)
@@ -29,7 +31,7 @@ export default function CustomHeader() {
             theme="light"
             mode="horizontal"
             defaultSelectedKeys={['home']}
-            items={menuItems}
+            items={jwt ? menuItemsAfterLogin : menuItems}
             className={styles.menu}
             onClick={({ key }) => handleClickMenuItem(key)}
           />

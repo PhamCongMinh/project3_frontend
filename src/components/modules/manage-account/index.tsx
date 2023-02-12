@@ -4,12 +4,11 @@ import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/ico
 import AvatarImage from '../../../assets/images/avatar.png'
 import Image from 'next/image'
 import React from 'react'
-import CreateRentalnews from './components/create-rentalnews'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import ManagementRentalNews from './components/management-news'
 import { authSliceActions } from '../../../store/auth/authSlice'
-import Contact from './components/management-news/components/contact'
+import EditProfile from './components/edit-profile'
+import Contact from './components/contact'
 
 type MenuItem = Required<MenuProps>['items'][number]
 const { Text } = Typography
@@ -30,15 +29,15 @@ function getItem(
 }
 
 const items: MenuProps['items'] = [
-  getItem('Đăng tin mới', 'createNews', <AppstoreOutlined />),
-  getItem('Quản lí tin đăng', 'managementNews', <AppstoreOutlined />),
-  getItem('Liên hệ', 'contact', <MailOutlined />)
+  getItem('Sửa thông tin cá nhân', 'editProfile', <AppstoreOutlined />),
+  getItem('Liên hệ', 'contact', <MailOutlined />),
+  getItem('Thoát', 'logout', <SettingOutlined />)
 ]
 
-export default function RentOutContent() {
+export default function ManageAccountContent() {
   const router = useRouter()
   const dispatch = useDispatch()
-  const [selectedMenuItem, setSelectedMenuItem] = React.useState('createNews')
+  const [selectedMenuItem, setSelectedMenuItem] = React.useState('editProfile')
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
   const user = useSelector((state: any) => state.auth?.user)
 
@@ -95,8 +94,7 @@ export default function RentOutContent() {
               className={styles.menu}
             />
           </div>
-          {selectedMenuItem === 'createNews' && <CreateRentalnews />}
-          {selectedMenuItem === 'managementNews' && <ManagementRentalNews />}
+          {selectedMenuItem === 'editProfile' && <EditProfile />}
           {selectedMenuItem === 'contact' && (
             <div className={styles.contact}>
               <Contact />
