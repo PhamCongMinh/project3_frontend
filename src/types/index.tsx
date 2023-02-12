@@ -33,3 +33,12 @@ export type RentNews = {
   startDay: Date
   endDay: Date
 }
+
+export type BlogType = {
+  _id: string
+  title: string
+  content: string
+  ownerId: string
+  created_at: string
+  updated_at: string
+}
