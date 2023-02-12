@@ -25,6 +25,9 @@ export const AuthSlice = createSlice({
     logOut: (state: WritableDraft<AuthState>) => {
       state.user = {}
     },
+    updateProfile: (state, action) => {
+      state.user = action.payload
+    },
     extraReducers: (builder: any) => {}
   }
 })

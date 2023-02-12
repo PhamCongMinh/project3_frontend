@@ -9,6 +9,8 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import ManagementRentalNews from './components/management-news'
 import { authSliceActions } from '../../../store/auth/authSlice'
+import EditProfile from './components/edit-profile'
+import Contact from './components/management-news/components/contact'
 
 type MenuItem = Required<MenuProps>['items'][number]
 const { Text } = Typography
@@ -41,6 +43,7 @@ export default function RentOutContent() {
   const dispatch = useDispatch()
   const [selectedMenuItem, setSelectedMenuItem] = React.useState('createNews')
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
+  const user = useSelector((state: any) => state.auth?.user)
 
   const handleUserNotLogin = () => {
     router.push('/signin')
@@ -68,8 +71,7 @@ export default function RentOutContent() {
 
   const handleClickMenuItem = async (key: string) => {
     if (key === 'logout') {
-      console.log('logout')
-      await dispatch(authSliceActions.logOut())
+      dispatch(authSliceActions.logOut())
       router.push('/home')
     }
     setSelectedMenuItem(key)
@@ -83,12 +85,12 @@ export default function RentOutContent() {
             <div className={styles.header}>
               <Image src={AvatarImage} alt="avatar" className={styles.avatar} />
               <Text strong style={{ marginLeft: '10px' }} className={styles.name}>
-                Phạm Minh
+                {user.username}
               </Text>
             </div>
             <Menu
               onClick={({ key }) => handleClickMenuItem(key)}
-              style={{ width: 256, height: 1020 }}
+              style={{ width: 256, height: 1110 }}
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               mode="inline"
@@ -98,8 +100,12 @@ export default function RentOutContent() {
           </div>
           {selectedMenuItem === 'createNews' && <CreateRentalnews />}
           {selectedMenuItem === 'managementNews' && <ManagementRentalNews />}
-          {selectedMenuItem === 'editProfile' && <div>Sửa thông tin cá nhân</div>}
-          {selectedMenuItem === 'contact' && <div>Liên hệ</div>}
+          {selectedMenuItem === 'editProfile' && <EditProfile />}
+          {selectedMenuItem === 'contact' && (
+            <div className={styles.contact}>
+              <Contact />
+            </div>
+          )}
         </Space>
       </div>
     </div>

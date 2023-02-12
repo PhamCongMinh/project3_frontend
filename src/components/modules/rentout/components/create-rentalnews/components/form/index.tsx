@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import produce from 'immer'
 import { UploadOutlined } from '@ant-design/icons'
 import { serialize } from 'object-to-formdata'
-import { Button, Col, Input, message, Row, Typography, Upload, UploadProps } from 'antd'
+import { Button, Col, DatePicker, DatePickerProps, Input, message, Row, Typography, Upload, UploadProps } from 'antd'
 
 import { AxiosService } from '../../../../../../../utils/axios'
 import styles from './style.module.scss'
 import { useSelector } from 'react-redux'
+import dayjs, { Dayjs } from 'dayjs'
 
 const { TextArea } = Input
 const { Text } = Typography
@@ -21,6 +22,8 @@ interface ICreateRentalNews {
   specificAddress?: string
   title: string
   description: string
+  startDate?: Date
+  endDate?: Date
 }
 
 const initialState: ICreateRentalNews = {
@@ -49,6 +52,15 @@ export default function RentOutForm() {
       produce(prev, draft => {
         // @ts-ignore
         draft[key] = (key === 'pricePerMonth') | (key === 'area') ? Number(e.target.value) : e.target.value
+      })
+    )
+  }
+
+  const handleChangeDate = (date: Dayjs | null, dateString: string, key: string) => {
+    setState((prev: ICreateRentalNews) =>
+      produce(prev, draft => {
+        // @ts-ignore
+        draft[key] = dateString
       })
     )
   }
@@ -126,7 +138,31 @@ export default function RentOutForm() {
       <Input style={{ maxWidth: 1000, marginBottom: 30 }} onChange={e => handleChange('pricePerMonth', e)} />
       <Text className={styles.title3}>Diện tích</Text>
       <Input style={{ maxWidth: 1000, marginBottom: 30 }} onChange={e => handleChange('area', e)} />
-      <Text className={styles.title2}>Hình ảnh</Text>
+
+      <Text className={styles.title3}>
+        Ngày bắt đầu
+        <br />
+      </Text>
+      <DatePicker
+        style={{ marginBottom: 30 }}
+        defaultValue={dayjs()}
+        onChange={(date, dateString) => handleChangeDate(date, dateString, 'startDay')}
+      />
+
+      <Text className={styles.title3}>
+        <br />
+        Ngày hết hạn
+        <br />
+      </Text>
+      <DatePicker
+        style={{ marginBottom: 30 }}
+        defaultValue={dayjs()}
+        onChange={(date, dateString) => handleChangeDate(date, dateString, 'endDay')}
+      />
+      <Text className={styles.title2}>
+        <br />
+        Hình ảnh
+      </Text>
       <div />
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Click to Upload</Button>

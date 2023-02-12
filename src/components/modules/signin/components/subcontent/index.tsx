@@ -15,7 +15,7 @@ interface ISignInForm {
   password: string
 }
 
-interface IAuth {
+export interface IAuth {
   jwt: string
   userId: string
   email: string
