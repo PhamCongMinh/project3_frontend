@@ -8,6 +8,7 @@ import CustomFooter from '../../components/layouts/footer'
 import { AxiosService } from '../../utils/axios'
 import BlogContent from '../../components/modules/blog'
 import { BlogType } from '../../types'
+import React from 'react'
 
 type IProps = {
   blog: BlogType[]
@@ -38,4 +39,4 @@ const Blog: NextPage<IProps> = props => {
   )
 }
 
-export default Blog
+export default React.memo(Blog)

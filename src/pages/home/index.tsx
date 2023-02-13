@@ -1,10 +1,11 @@
+import React from 'react'
 import { Layout } from 'antd'
 import CustomHeader from '../../components/layouts/header'
 import CustomContent from '../../components/layouts/content'
 import CustomFooter from '../../components/layouts/footer'
 import { Content } from 'antd/lib/layout/layout'
 
-export default function Home() {
+const Home = () => {
   return (
     <Layout>
       <CustomHeader />
@@ -15,3 +16,5 @@ export default function Home() {
     </Layout>
   )
 }
+
+export default React.memo(Home)

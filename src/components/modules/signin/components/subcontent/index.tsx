@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import produce from 'immer'
 import { useDispatch } from 'react-redux'
 import { Button, Form, Input, Space, Typography } from 'antd'
@@ -35,16 +35,16 @@ export default function SignInForm() {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  const handleChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((key: string, e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev: ISignInForm) =>
       produce(prev, draft => {
         // @ts-ignore
         draft[key] = e.target.value
       })
     )
-  }
+  }, [])
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       const response = await axiosService.post('/auth/login', state)
       const userData: IAuth = {
@@ -66,7 +66,8 @@ export default function SignInForm() {
       alert('Đăng nhập thất bại, vui lòng kiểm tra lại thông tin trước khi thử lại')
       console.log(error)
     }
-  }
+  }, [state, dispatch, router])
+
   return (
     <Space className={styles.space}>
       <Typography>

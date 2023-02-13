@@ -5,6 +5,7 @@ import RentOutImage from '../../../assets/images/image_introduction_rentout.png'
 
 import styles from './style.module.scss'
 import Paragraph from 'antd/lib/typography/Paragraph'
+import React from 'react'
 
 const { Text, Title } = Typography
 
@@ -34,4 +35,4 @@ const Blog: React.FC<IProps> = (props): JSX.Element => {
   )
 }
 
-export default Blog
+export default React.memo(Blog)

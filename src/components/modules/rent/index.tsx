@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Button, Divider, Input, Space, Typography } from 'antd'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import produce from 'immer'
 
 import { FilterText } from '../../../constants/rent.constants'
@@ -174,4 +174,4 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
   )
 }
 
-export default RentContent
+export default React.memo(RentContent)

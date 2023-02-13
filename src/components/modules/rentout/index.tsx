@@ -3,7 +3,7 @@ import styles from './style.module.scss'
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons'
 import AvatarImage from '../../../assets/images/avatar.png'
 import Image from 'next/image'
-import React from 'react'
+import React, { useCallback } from 'react'
 import CreateRentalnews from './components/create-rentalnews'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,16 +35,16 @@ const items: MenuProps['items'] = [
   getItem('Liên hệ', 'contact', <MailOutlined />)
 ]
 
-export default function RentOutContent() {
+function RentOutContent() {
   const router = useRouter()
   const dispatch = useDispatch()
   const [selectedMenuItem, setSelectedMenuItem] = React.useState('createNews')
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
   const user = useSelector((state: any) => state.auth?.user)
 
-  const handleUserNotLogin = () => {
+  const handleUserNotLogin = useCallback(() => {
     router.push('/signin')
-  }
+  }, [router])
 
   if (!jwt) {
     return (
@@ -107,3 +107,5 @@ export default function RentOutContent() {
     </div>
   )
 }
+
+export default React.memo(RentOutContent)

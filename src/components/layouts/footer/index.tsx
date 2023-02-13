@@ -2,10 +2,11 @@ import { Footer } from 'antd/lib/layout/layout'
 import { Space, Typography } from 'antd'
 
 import styles from './style.module.scss'
+import React from 'react'
 
 const { Text, Title } = Typography
 
-export default function CustomFooter() {
+function CustomFooter() {
   return (
     <Footer style={{ padding: 0, textAlign: 'center' }}>
       <Space className={styles.container}>
@@ -27,3 +28,5 @@ export default function CustomFooter() {
     </Footer>
   )
 }
+
+export default React.memo(CustomFooter)

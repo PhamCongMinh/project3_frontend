@@ -3,10 +3,11 @@ import { Button, Space, Typography } from 'antd'
 import RentOutImage from '../../../../../assets/images/image_introduction_rentout.png'
 
 import styles from './style.module.scss'
+import React from 'react'
 
 const { Text, Title } = Typography
 
-export default function IntroductionRentout() {
+function IntroductionRentout() {
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: 100, marginBottom: 100 }}>
       <Space className={styles.space}>
@@ -23,3 +24,5 @@ export default function IntroductionRentout() {
     </div>
   )
 }
+
+export default React.memo(IntroductionRentout)

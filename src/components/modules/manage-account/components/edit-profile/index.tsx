@@ -5,7 +5,7 @@ import styles from './style.module.scss'
 import EditProfileForm from './components/form'
 
 const { Text } = Typography
-export default function EditProfile() {
+function EditProfile() {
   return (
     <div className={styles.content}>
       <Breadcrumb>
@@ -24,3 +24,5 @@ export default function EditProfile() {
     </div>
   )
 }
+
+export default React.memo(EditProfile)

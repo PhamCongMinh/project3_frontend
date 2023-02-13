@@ -5,10 +5,11 @@ import { menuItems, menuItemsAfterLogin } from '../../../constants'
 import styles from './style.module.scss'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import React from 'react'
 
 const { Text } = Typography
 
-export default function CustomHeader() {
+function CustomHeader() {
   const router = useRouter()
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
 
@@ -40,3 +41,5 @@ export default function CustomHeader() {
     </Header>
   )
 }
+
+export default React.memo(CustomHeader)

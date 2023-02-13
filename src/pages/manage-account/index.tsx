@@ -5,7 +5,7 @@ import CustomFooter from '../../components/layouts/footer'
 import React from 'react'
 import ManageAccountContent from '../../components/modules/manage-account'
 
-export default function ManageAccount() {
+function ManageAccount() {
   return (
     <Layout>
       <CustomHeader />
@@ -16,3 +16,5 @@ export default function ManageAccount() {
     </Layout>
   )
 }
+
+export default React.memo(ManageAccount)

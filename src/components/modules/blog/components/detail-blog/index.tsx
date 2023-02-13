@@ -42,4 +42,4 @@ const DetailBlogContent: NextPage<IProps> = props => {
   )
 }
 
-export default DetailBlogContent
+export default React.memo(DetailBlogContent)

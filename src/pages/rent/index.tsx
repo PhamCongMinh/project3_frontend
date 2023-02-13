@@ -10,6 +10,7 @@ import CustomFooter from '../../components/layouts/footer'
 import { RentNews } from '../../types'
 import { handleURLWhenClickSearchButton, parseUrlToJson } from '../../utils/url'
 import { AxiosService } from '../../utils/axios'
+import React from 'react'
 
 type IProps = {
   rentNews: RentNews[]
@@ -50,4 +51,4 @@ const Rent: NextPage<IProps> = props => {
   )
 }
 
-export default Rent
+export default React.memo(Rent)

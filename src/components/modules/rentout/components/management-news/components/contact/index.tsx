@@ -1,7 +1,7 @@
 import * as SupportImage from '../../../../../../../assets/images/support-bg.jpg'
 import Image from 'next/image'
 import styles from './style.module.scss'
-import { Row, Typography } from 'antd'
+import { Typography } from 'antd'
 import React from 'react'
 
 const { Text } = Typography

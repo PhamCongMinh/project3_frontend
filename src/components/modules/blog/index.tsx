@@ -69,4 +69,4 @@ const BlogContent: React.FC<IProps> = (props): JSX.Element => {
   )
 }
 
-export default BlogContent
+export default React.memo(BlogContent)

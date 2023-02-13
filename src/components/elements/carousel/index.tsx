@@ -6,8 +6,9 @@ import ImageInCarousel1 from '../../../assets/images/list_image_header_1.png'
 import ImageInCarousel2 from '../../../assets/images/list_image_header_2.png'
 
 import styles from './style.module.scss'
+import React from 'react'
 
-export default function ImagesCarousel() {
+function ImagesCarousel() {
   return (
     <div className={styles.container}>
       <Carousel autoplay={true}>
@@ -22,3 +23,5 @@ export default function ImagesCarousel() {
     </div>
   )
 }
+
+export default React.memo(ImagesCarousel)

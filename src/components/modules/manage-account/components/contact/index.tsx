@@ -6,7 +6,7 @@ import React from 'react'
 
 const { Text } = Typography
 
-export default function Contact() {
+function Contact() {
   return (
     <div className={styles.content}>
       <div style={{ textAlign: 'center' }}>
@@ -28,3 +28,5 @@ export default function Contact() {
     </div>
   )
 }
+
+export default React.memo(Contact)

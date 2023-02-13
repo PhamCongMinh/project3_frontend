@@ -5,10 +5,11 @@ import TrueValueIcon from '../../../../../assets/images/icon_true_value.png'
 import RealHomeIcon from '../../../../../assets/images/icon_house.png'
 import RealConnectionValueIcon from '../../../../../assets/images/icon_connections.png'
 import styles from './style.module.scss'
+import React from 'react'
 
 const { Text, Title } = Typography
 
-export default function ListIcon() {
+function ListIcon() {
   return (
     <Space className={styles.space}>
       <div style={{ marginRight: 200 }}>
@@ -29,3 +30,5 @@ export default function ListIcon() {
     </Space>
   )
 }
+
+export default React.memo(ListIcon)

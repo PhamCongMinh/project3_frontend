@@ -1,10 +1,11 @@
+import React from 'react'
 import { Layout } from 'antd'
 import CustomHeader from '../../components/layouts/header'
 import { Content } from 'antd/lib/layout/layout'
 import CustomFooter from '../../components/layouts/footer'
 import SignUpContent from '../../components/modules/signup'
 
-export default function SignUp() {
+function SignUp() {
   return (
     <Layout>
       <CustomHeader />
@@ -15,3 +16,5 @@ export default function SignUp() {
     </Layout>
   )
 }
+
+export default React.memo(SignUp)

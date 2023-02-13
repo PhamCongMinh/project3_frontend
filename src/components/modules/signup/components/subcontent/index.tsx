@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import produce from 'immer'
 import { serialize } from 'object-to-formdata'
 import { Button, Form, Input, Space, Typography } from 'antd'
@@ -25,16 +25,16 @@ export default function SignUpForm() {
   const [state, setState] = useState<ISignUpForm>(initialState)
   const axiosService = new AxiosService('application/json')
 
-  const handleChange = (key: string, e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((key: string, e: React.ChangeEvent<HTMLInputElement>) => {
     setState((prev: ISignUpForm) =>
       produce(prev, draft => {
         // @ts-ignore
         draft[key] = e.target.value
       })
     )
-  }
+  }, [])
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     try {
       const response = await axiosService.post('/auth/register', state)
       console.log(response)
@@ -44,7 +44,7 @@ export default function SignUpForm() {
       alert('Đăng kí thất bại, vui lòng kiểm tra lại thông tin trước khi thử lại')
       console.log(error)
     }
-  }
+  }, [state])
 
   return (
     <Space className={styles.space}>

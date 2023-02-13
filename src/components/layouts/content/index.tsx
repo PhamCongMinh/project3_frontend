@@ -5,8 +5,9 @@ import IntroductionRent from './components/introduction-rent'
 import IntroductionRentout from './components/introduction-rentout'
 import { Divider } from 'antd'
 import ListIcon from './components/list-icon'
+import React from 'react'
 
-export default function CustomContent() {
+function CustomContent() {
   return (
     <div>
       <ImagesCarousel />
@@ -19,3 +20,4 @@ export default function CustomContent() {
     </div>
   )
 }
+export default React.memo(CustomContent)

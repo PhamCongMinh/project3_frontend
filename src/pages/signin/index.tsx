@@ -4,8 +4,9 @@ import { Content } from 'antd/lib/layout/layout'
 import CustomFooter from '../../components/layouts/footer'
 import SignUpContent from '../../components/modules/signup'
 import SignInContent from '../../components/modules/signin'
+import React from 'react'
 
-export default function SignIn() {
+function SignIn() {
   return (
     <Layout>
       <CustomHeader />
@@ -16,3 +17,5 @@ export default function SignIn() {
     </Layout>
   )
 }
+
+export default React.memo(SignIn)

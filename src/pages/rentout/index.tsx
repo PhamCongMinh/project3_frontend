@@ -9,7 +9,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 
-export default function RentOut() {
+function RentOut() {
   return (
     <Layout>
       <CustomHeader />
@@ -20,3 +20,5 @@ export default function RentOut() {
     </Layout>
   )
 }
+
+export default React.memo(RentOut)

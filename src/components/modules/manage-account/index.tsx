@@ -3,7 +3,7 @@ import styles from './style.module.scss'
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons'
 import AvatarImage from '../../../assets/images/avatar.png'
 import Image from 'next/image'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import { authSliceActions } from '../../../store/auth/authSlice'
@@ -34,16 +34,16 @@ const items: MenuProps['items'] = [
   getItem('Thoát', 'logout', <SettingOutlined />)
 ]
 
-export default function ManageAccountContent() {
+function ManageAccountContent() {
   const router = useRouter()
   const dispatch = useDispatch()
   const [selectedMenuItem, setSelectedMenuItem] = React.useState('editProfile')
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
   const user = useSelector((state: any) => state.auth?.user)
 
-  const handleUserNotLogin = () => {
+  const handleUserNotLogin = useCallback(() => {
     router.push('/signin')
-  }
+  }, [router])
 
   if (!jwt) {
     return (
@@ -105,3 +105,5 @@ export default function ManageAccountContent() {
     </div>
   )
 }
+
+export default React.memo(ManageAccountContent)

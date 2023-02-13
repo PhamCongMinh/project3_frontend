@@ -4,10 +4,11 @@ import { Typography } from 'antd'
 import StudentHouse from '../../../../../assets/images/student_house.jpeg'
 
 import styles from './style.module.scss'
+import React from 'react'
 
 const { Text } = Typography
 
-export default function IntroductionRent() {
+function IntroductionRent() {
   return (
     <div>
       <div style={{ marginTop: 100 }}>
@@ -29,3 +30,5 @@ export default function IntroductionRent() {
     </div>
   )
 }
+
+export default React.memo(IntroductionRent)

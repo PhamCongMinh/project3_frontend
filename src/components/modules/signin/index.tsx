@@ -7,7 +7,7 @@ import ImageInCarousel2 from '../../../assets/images/list_image_header_2.png'
 import SignInForm from './components/subcontent'
 import React from 'react'
 
-export default function SignInContent() {
+function SignInContent() {
   return (
     <div>
       <div className={styles.container}>
@@ -25,3 +25,5 @@ export default function SignInContent() {
     </div>
   )
 }
+
+export default React.memo(SignInContent)

@@ -7,9 +7,10 @@ import House2 from '../../../../../assets/images/house2.jpeg'
 import House3 from '../../../../../assets/images/house3.jpeg'
 
 import styles from './style.module.scss'
+import React from 'react'
 
 const { Text } = Typography
-export default function ListHouse() {
+function ListHouse() {
   return (
     <div>
       <Typography style={{ marginTop: 50, marginBottom: 50, textAlign: 'center' }}>
@@ -56,3 +57,5 @@ export default function ListHouse() {
     </div>
   )
 }
+
+export default React.memo(ListHouse)
