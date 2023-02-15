@@ -46,3 +46,15 @@
   font-size: 20px;
   line-height: 1.625em;
 }
+
+.select {
+  width: 250px !important;
+  height: 50px !important;
+  :global .ant-select-selector {
+    width: 250px !important;
+    height: 50px !important;
+    display: flex;
+    align-items: center;
+    text-align: center;
+  }
+}

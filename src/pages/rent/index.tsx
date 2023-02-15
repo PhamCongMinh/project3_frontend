@@ -58,6 +58,7 @@ const Rent: NextPage = props => {
   }
 
   const handleClickSearchButton = async (searchData: TSearch) => {
+    console.log('searchData', searchData)
     const url = handleURLWhenClickSearchButton(initialUrl, searchData)
     await router.push(url)
   }

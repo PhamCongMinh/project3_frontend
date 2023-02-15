@@ -37,9 +37,9 @@ export type CommentType = {
 }
 
 export enum RentNewsType {
-  TYPE1 = 'Phòng trọ',
-  TYPE2 = 'Nhà thuê nguyên căn',
-  TYPE3 = 'Căn hộ mini',
+  TYPE1 = 'PhòngTrọ',
+  TYPE2 = 'NhàThuêNguyênCăn',
+  TYPE3 = 'CănHộMini',
   TYPE4 = 'Homestay'
 }
 

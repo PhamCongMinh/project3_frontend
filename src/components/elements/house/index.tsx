@@ -21,7 +21,7 @@ const House: React.FC<IProps> = (props): JSX.Element => {
   return (
     <div style={{ marginLeft: 150, marginBottom: 50 }} onClick={props.onClick}>
       <Space className={styles.space}>
-        <Image src={RentOutImage} alt="House1" style={{ width: 350, height: 250 }} />
+        <Image src={House1} alt="House1" style={{ width: 350, height: 250 }} />
         <div className={styles.container}>
           <Title ellipsis={{ rows: 1 }} className={styles.title}>
             {title}

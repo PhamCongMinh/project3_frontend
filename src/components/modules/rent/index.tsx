@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Button, Divider, Input, Space, Typography } from 'antd'
+import { Button, Divider, Input, Select, Space, Typography } from 'antd'
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import produce from 'immer'
 
@@ -7,7 +7,7 @@ import { FilterText } from '../../../constants/rent.constants'
 import SearchIcon from '../../../assets/images/search_icon.png'
 import House from '../../elements/house'
 import SubContent from './components/subcontent'
-import { RentNews } from '../../../types'
+import { RentNews, RentNewsType } from '../../../types'
 
 import styles from './style.module.scss'
 import DetailHouseContent from '../detail-house'
@@ -39,6 +39,7 @@ export type TSearch = {
   maxArea?: number
   minPricePerMonth?: number
   maxPricePerMonth?: number
+  rentNewsType?: RentNewsType
 }
 
 const initialState: TSearch = {}
@@ -69,6 +70,15 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
       })
     )
   }, [])
+
+  const handleSelectRentNewsType = (value: string) => {
+    setState(prev =>
+      produce(prev, draft => {
+        // @ts-ignore
+        draft['rentNewsType'] = value
+      })
+    )
+  }
 
   const handleClickSearch = useCallback(() => {
     props.handleSearch(state)
@@ -142,6 +152,19 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
                 className={styles.input}
                 value={state?.maxArea}
                 onChange={e => handleChangeInput(inputType.MAXAREA, e)}
+              />
+              <Select
+                defaultValue=""
+                className={styles.select}
+                onChange={handleSelectRentNewsType}
+                value={state?.rentNewsType}
+                options={[
+                  { value: '', label: 'Tất cả' },
+                  { value: RentNewsType.TYPE1, label: 'Phòng trọ' },
+                  { value: RentNewsType.TYPE2, label: 'Nhà thuê nguyên căn' },
+                  { value: RentNewsType.TYPE3, label: 'Căn hộ mini' },
+                  { value: RentNewsType.TYPE4, label: 'Homestay' }
+                ]}
               />
             </Space>
           )}

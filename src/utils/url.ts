@@ -11,6 +11,7 @@ export const handleURLWhenClickSearchButton = (initialUrl: string, searchData: T
   if (searchData.maxPricePerMonth) query = { ...query, maxPricePerMonth: searchData.maxPricePerMonth }
   if (searchData.minArea) query = { ...query, minArea: searchData.minArea }
   if (searchData.maxArea) query = { ...query, maxArea: searchData.maxArea }
+  if (searchData.rentNewsType) query = { ...query, rentNewsType: searchData.rentNewsType }
 
   return {
     pathname: initialUrl,

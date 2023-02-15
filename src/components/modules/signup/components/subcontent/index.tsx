@@ -1,25 +1,34 @@
 import React, { useCallback, useState } from 'react'
 import produce from 'immer'
 import { serialize } from 'object-to-formdata'
-import { Button, Form, Input, Space, Typography } from 'antd'
+import { Button, Form, Input, Select, Space, Typography } from 'antd'
 import { AxiosService } from '../../../../../utils/axios'
 
 import styles from './style.module.scss'
+import { RentNewsType } from '../../../../../types'
 
 const { Text } = Typography
+
+export enum Role {
+  HOST = 'host',
+  RENTER = 'renter',
+  ADMIN = 'admin'
+}
 
 interface ISignUpForm {
   username: string
   email: string
   numberPhone: string
   password: string
+  role: Role
 }
 
 const initialState: ISignUpForm = {
   username: '',
   email: '',
   numberPhone: '',
-  password: ''
+  password: '',
+  role: Role.RENTER
 }
 export default function SignUpForm() {
   const [state, setState] = useState<ISignUpForm>(initialState)
@@ -33,6 +42,15 @@ export default function SignUpForm() {
       })
     )
   }, [])
+
+  const handleSelectRentNewsType = (value: string) => {
+    setState(prev =>
+      produce(prev, draft => {
+        // @ts-ignore
+        draft['role'] = value
+      })
+    )
+  }
 
   const handleSubmit = useCallback(async () => {
     try {
@@ -72,6 +90,19 @@ export default function SignUpForm() {
 
         <Form.Item>
           <Input placeholder="Mật khẩu" onChange={e => handleChange('password', e)} />
+        </Form.Item>
+
+        <Form.Item>
+          <Select
+            defaultValue="renter"
+            className={styles.select}
+            onChange={handleSelectRentNewsType}
+            value={state?.role}
+            options={[
+              { value: Role.RENTER, label: 'Người thuê trọ' },
+              { value: Role.HOST, label: 'Chủ trọ' }
+            ]}
+          />
         </Form.Item>
 
         <Form.Item>

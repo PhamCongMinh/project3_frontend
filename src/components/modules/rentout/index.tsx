@@ -43,16 +43,17 @@ function RentOutContent() {
   const user = useSelector((state: any) => state.auth?.user)
 
   const handleUserNotLogin = useCallback(() => {
-    router.push('/signin')
-  }, [router])
+    window.location.href = '/signin'
+    // router.push('/signin')
+  }, [])
 
-  if (!jwt) {
+  if (!jwt || user.role !== 'host') {
     return (
       <div>
         <Alert
           message="Không có quyền truy cập"
           showIcon
-          description="Bạn phải đăng nhập để sử dụng chức năng này"
+          description="Bạn phải đăng nhập với tài khoản chủ trọ để sử dụng chức năng này"
           type="error"
           action={
             <Button size="small" danger>

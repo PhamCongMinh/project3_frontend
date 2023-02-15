@@ -91,10 +91,13 @@ export default function RentOutForm() {
 
   const props: UploadProps = {
     name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text'
-    },
+    // action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    // headers: {
+    //   authorization: 'authorization-text'
+    // },
+    multiple: false,
+    // showUploadList: false,
+    accept: 'image/png,image/gif,image/jpeg',
     onChange(info) {
       if (info.file.status !== 'uploading') {
         console.log(info.file, info.fileList)
