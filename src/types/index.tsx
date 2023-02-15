@@ -13,9 +13,39 @@ export enum RentalStatus {
   RENTED = 'rented'
 }
 
+export type User = {
+  _id: string
+  email: string
+  password: string
+  role: string
+  username: string
+  numberPhone: string
+  zaloPhone?: string
+  facebookUrl?: string
+  avatarUrl?: string
+  created_at: string
+  updated_at: string
+}
+
+export type CommentType = {
+  _id: string
+  content: string
+  ownerId: User
+  rate: number
+  created_at: string
+  updated_at: string
+}
+
+export enum RentNewsType {
+  TYPE1 = 'Phòng trọ',
+  TYPE2 = 'Nhà thuê nguyên căn',
+  TYPE3 = 'Căn hộ mini',
+  TYPE4 = 'Homestay'
+}
+
 export type RentNews = {
   _id: string
-  ownerId: string
+  ownerId: User
   status: RentalStatus
   pricePerMonth: number
   area: number
@@ -32,6 +62,8 @@ export type RentNews = {
   updated_at: string
   startDay: Date
   endDay: Date
+  comments: CommentType[]
+  rentNewsType: RentNewsType
 }
 
 export type BlogType = {

@@ -87,7 +87,7 @@ function RentOutContent() {
             </div>
             <Menu
               onClick={({ key }) => handleClickMenuItem(key)}
-              style={{ width: 256, height: 1110 }}
+              style={{ width: 256, height: 1165 }}
               defaultSelectedKeys={['1']}
               defaultOpenKeys={['sub1']}
               mode="inline"

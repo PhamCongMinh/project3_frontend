@@ -1,28 +1,85 @@
 import Image from 'next/image'
 import RentOutImage from '../../../assets/images/image_introduction_rentout.png'
 import styles from './style.module.scss'
-import { Breadcrumb, Button, Typography } from 'antd'
+import { Breadcrumb, Button, Divider, Input, Rate, Typography } from 'antd'
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
-import React from 'react'
-import { RentNews } from '../../../types'
+import React, { useCallback, useState } from 'react'
+import { CommentType, RentNews } from '../../../types'
 import { NextPage } from 'next'
+import Comments from './components/comments'
+import { useDispatch, useSelector } from 'react-redux'
+import AxiosService from '../../../utils/axios'
+import { useRouter } from 'next/router'
 
 const { Text, Title } = Typography
 
-const characteristic =
-  'Loại tin rao:\tPhòng trọ, nhà trọ\n' + 'Đối tượng thuê:\tTất cả\n' + 'Gói tin:\tTin VIP nổi bật\n'
-
-const contact = 'Liên hệ:\tNguyễn Tấn Phương\n' + 'Điện thoại:\t0909058858\n' + 'Zalo\t0909058858'
+const characteristic = 'Đối tượng thuê:\tTất cả\n' + 'Gói tin:\tTin VIP nổi bật\n'
 
 type IProps = {
   rentNews: RentNews
   handleClickBack: () => void
+  setReload: () => void
+}
+
+const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful']
+
+export interface IComment {
+  comment: string
+  rate: number
+}
+
+const initialComment: IComment = {
+  comment: '',
+  rate: 3
 }
 
 const DetailHouseContent: NextPage<IProps> = props => {
   const { rentNews } = props
+  const [comment, setComment] = useState<IComment>(initialComment)
+  const jwt = useSelector((state: any) => state.auth?.user?.jwt)
+  const axiosService = new AxiosService('application/json', jwt)
+  const router = useRouter()
+
+  const handleChangeRate = useCallback(
+    (value: number) => {
+      setComment({ ...comment, rate: value })
+    },
+    [comment]
+  )
+
+  const handleChangeComment = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setComment({ ...comment, comment: e.target.value })
+    },
+    [comment]
+  )
+
+  const handleSubmitComment = useCallback(async () => {
+    try {
+      let isMissingInfo: boolean = false
+      Object.values(comment).forEach(value => {
+        if (!value) {
+          alert('Bạn phải nhập đầy đủ thông tin')
+          isMissingInfo = true
+        }
+      })
+      if (isMissingInfo) return
+
+      await axiosService.post('/comment', {
+        content: comment.comment,
+        rate: comment.rate,
+        rentNewsId: rentNews._id
+      })
+      await props.setReload()
+    } catch (e) {
+      alert('Bạn phải đăng nhập mới có thể bình luận')
+      await router.push('signin')
+      console.log(e)
+    }
+  }, [comment, axiosService, rentNews._id, props.setReload, router])
+
   return (
-    <div style={{ marginLeft: 200, marginTop: 25 }}>
+    <div className={styles.content}>
       <Breadcrumb>
         <Breadcrumb.Item onClick={props.handleClickBack}>
           <HomeOutlined />
@@ -72,16 +129,51 @@ const DetailHouseContent: NextPage<IProps> = props => {
         </Text>
         <pre className={styles.text}>{characteristic}</pre>
         <Text className={styles.text}>
+          {'Loại tin rao: ' + rentNews.rentNewsType} <br />
+        </Text>
+        <Text className={styles.text}>
           {'Ngày đăng: ' + rentNews.startDay} <br />
         </Text>
-        <Text className={styles.text} style={{ marginBottom: 30 }}>
+        <Text className={styles.text}>
           {'Ngày hết hạn: ' + rentNews.startDay}
           <br />
         </Text>
         <Text className={styles.title3}>
           Thông tin liên hệ <br />
         </Text>
-        <pre className={styles.text}>{contact}</pre>
+        <Text className={styles.text}>
+          {'Liên hệ: ' + rentNews.ownerId.username} <br />
+        </Text>
+        <Text className={styles.text}>
+          {'Điện thoại: ' + rentNews.ownerId.numberPhone}
+          <br />
+        </Text>
+        <Text className={styles.text}>
+          {'Email: ' + rentNews.ownerId.email}
+          <br />
+        </Text>
+
+        <Text className={styles.title3}>
+          Bình luận <br />
+        </Text>
+        <Rate tooltips={desc} onChange={handleChangeRate} value={comment.rate} />
+        {comment.rate ? <span className="ant-rate-text">{desc[comment.rate - 1]}</span> : ''}
+        <br />
+        <Input
+          style={{ width: 800, marginBottom: 30, marginTop: 20 }}
+          placeholder="Comment"
+          onChange={e => handleChangeComment(e)}
+        />
+        <Button style={{ backgroundColor: '#6078f7', color: '#fff', marginLeft: 30 }} onClick={handleSubmitComment}>
+          Gửi
+        </Button>
+        {rentNews.comments &&
+          rentNews.comments.map(comment => (
+            <div key={comment._id}>
+              <Comments commentData={comment} />
+              <Divider />
+            </div>
+          ))}
       </div>
     </div>
   )

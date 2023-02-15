@@ -26,3 +26,11 @@ export const parseUrlToJson = (context: GetServerSidePropsContext) => {
 
   return filter
 }
+
+export const parseUrlToJson2 = (filter: TSearch) => {
+  if (filter.city) filter.city = String(filter.city).replace(/_/g, ' ')
+  if (filter.district) filter.district = String(filter.district).replace(/_/g, ' ')
+  if (filter.commune) filter.commune = String(filter.commune).replace(/_/g, ' ')
+
+  return filter
+}

@@ -18,6 +18,7 @@ interface IProps {
   data: RentNews[]
   handleSearch: (searchData: TSearch) => void
   appliedFilter: TSearch
+  setReload: () => void
 }
 
 enum inputType {
@@ -50,24 +51,24 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
 
   useEffect(() => {
     setState(props.appliedFilter)
-  }, [props.appliedFilter])
+    const newDataOfDetailHouse = props.data.find(rentNew => rentNew._id === detailHouse._id)
+    if (!newDataOfDetailHouse) return
+    setDetailHouse(newDataOfDetailHouse)
+  }, [props.appliedFilter, detailHouse, props.data])
 
   const handleClickMoreOptions = useCallback(() => {
     setExtendedFilter(!extendedFilter)
   }, [extendedFilter])
 
-  const handleChangeInput = useCallback(
-    (type: inputType, e: ChangeEvent<HTMLInputElement>) => {
-      setState(prev =>
-        produce(prev, draft => {
-          // @ts-ignore
-          // eslint-disable-next-line
-          draft[type] = e.target.value
-        })
-      )
-    },
-    [state]
-  )
+  const handleChangeInput = useCallback((type: inputType, e: ChangeEvent<HTMLInputElement>) => {
+    setState(prev =>
+      produce(prev, draft => {
+        // @ts-ignore
+        // eslint-disable-next-line
+        draft[type] = e.target.value
+      })
+    )
+  }, [])
 
   const handleClickSearch = useCallback(() => {
     props.handleSearch(state)
@@ -169,9 +170,11 @@ const RentContent: React.FC<IProps> = (props): JSX.Element => {
           </Space>
         </div>
       )}
-      {isOpenDetailHouse === true && <DetailHouseContent rentNews={detailHouse} handleClickBack={handleClickBack} />}
+      {isOpenDetailHouse === true && (
+        <DetailHouseContent rentNews={detailHouse} handleClickBack={handleClickBack} setReload={props.setReload} />
+      )}
     </div>
   )
 }
 
-export default React.memo(RentContent)
+export default RentContent

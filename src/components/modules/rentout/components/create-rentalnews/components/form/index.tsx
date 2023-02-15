@@ -2,12 +2,25 @@ import React, { useState } from 'react'
 import produce from 'immer'
 import { UploadOutlined } from '@ant-design/icons'
 import { serialize } from 'object-to-formdata'
-import { Button, Col, DatePicker, DatePickerProps, Input, message, Row, Typography, Upload, UploadProps } from 'antd'
+import {
+  Button,
+  Col,
+  DatePicker,
+  DatePickerProps,
+  Input,
+  message,
+  Row,
+  Select,
+  Typography,
+  Upload,
+  UploadProps
+} from 'antd'
 
 import { AxiosService } from '../../../../../../../utils/axios'
 import styles from './style.module.scss'
 import { useSelector } from 'react-redux'
 import dayjs, { Dayjs } from 'dayjs'
+import { RentNewsType } from '../../../../../../../types'
 
 const { TextArea } = Input
 const { Text } = Typography
@@ -24,6 +37,7 @@ interface ICreateRentalNews {
   description: string
   startDate?: Date
   endDate?: Date
+  rentNewsType: RentNewsType
 }
 
 const initialState: ICreateRentalNews = {
@@ -35,7 +49,8 @@ const initialState: ICreateRentalNews = {
   street: '',
   specificAddress: '',
   title: '',
-  description: ''
+  description: '',
+  rentNewsType: RentNewsType.TYPE1
 }
 
 export default function RentOutForm() {
@@ -61,6 +76,15 @@ export default function RentOutForm() {
       produce(prev, draft => {
         // @ts-ignore
         draft[key] = dateString
+      })
+    )
+  }
+
+  const handleSelectRentNewsType = (value: string) => {
+    setState((prev: ICreateRentalNews) =>
+      produce(prev, draft => {
+        // @ts-ignore
+        draft['rentNewsType'] = value
       })
     )
   }
@@ -129,8 +153,26 @@ export default function RentOutForm() {
       <Text className={styles.title3}>Địa chỉ chính xác</Text>
       <Input style={{ maxWidth: 1000, marginBottom: 30 }} onChange={e => handleChange('specificAddress', e)} />
       <Text className={styles.title2}>Thông tin mô tả</Text>
-      <div style={{ marginBottom: 20 }} />
-      <Text className={styles.title3}>Tiêu đề</Text>
+      <Text className={styles.title3}>
+        <br />
+        Loại chuyên mục <br />
+      </Text>
+      <Select
+        defaultValue="Phòng trọ"
+        style={{ width: 400, marginBottom: 20 }}
+        onChange={handleSelectRentNewsType}
+        options={[
+          { value: RentNewsType.TYPE1, label: 'Phòng trọ' },
+          { value: RentNewsType.TYPE2, label: 'Nhà thuê nguyên căn' },
+          { value: RentNewsType.TYPE3, label: 'Căn hộ mini' },
+          { value: RentNewsType.TYPE4, label: 'Homestay' }
+        ]}
+      />
+
+      <Text className={styles.title3}>
+        <br />
+        Tiêu đề
+      </Text>
       <Input style={{ maxWidth: 1000, marginBottom: 30 }} onChange={e => handleChange('title', e)} />
       <Text className={styles.title3}>Nội dung mô tả</Text>
       <TextArea rows={4} style={{ maxWidth: 1000, marginBottom: 30 }} onChange={e => handleChange('description', e)} />
