@@ -1,6 +1,6 @@
 import { MenuProps } from 'antd'
 
-export const menuItems: MenuProps['items'] = [
+export const menuItemsBeforeLogin: MenuProps['items'] = [
   {
     label: <a>Trang chủ</a>,
     key: 'home'
@@ -43,6 +43,29 @@ export const menuItemsAfterLogin: MenuProps['items'] = [
   {
     label: 'Blog',
     key: 'blog'
+  },
+  {
+    label: <a>Quản lí tài khoản</a>,
+    key: 'manage-account'
+  }
+]
+
+export const menuItemsForAdmin: MenuProps['items'] = [
+  {
+    label: <a>Trang chủ</a>,
+    key: 'home'
+  },
+  {
+    label: <a>Tìm trọ</a>,
+    key: 'rent'
+  },
+  {
+    label: 'Blog',
+    key: 'blog'
+  },
+  {
+    label: <a>Quản lí hệ thống</a>,
+    key: 'manage-system'
   },
   {
     label: <a>Quản lí tài khoản</a>,

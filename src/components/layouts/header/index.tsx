@@ -1,6 +1,6 @@
 import { Col, Menu, Row, Typography } from 'antd'
 import { Header } from 'antd/lib/layout/layout'
-import { menuItems, menuItemsAfterLogin } from '../../../constants'
+import { menuItemsBeforeLogin, menuItemsAfterLogin, menuItemsForAdmin } from '../../../constants'
 
 import styles from './style.module.scss'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ const { Text } = Typography
 function CustomHeader() {
   const router = useRouter()
   const jwt = useSelector((state: any) => state.auth?.user?.jwt)
+  const user = useSelector((state: any) => state.auth?.user)
 
   const handleClickMenuItem = (route: string) => {
     router.push(route)
@@ -32,7 +33,7 @@ function CustomHeader() {
             theme="light"
             mode="horizontal"
             defaultSelectedKeys={['home']}
-            items={jwt ? menuItemsAfterLogin : menuItems}
+            items={jwt && user.role === 'admin' ? menuItemsForAdmin : !jwt ? menuItemsBeforeLogin : menuItemsAfterLogin}
             className={styles.menu}
             onClick={({ key }) => handleClickMenuItem(key)}
           />
