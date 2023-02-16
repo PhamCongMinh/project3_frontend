@@ -10,6 +10,7 @@ import Comments from './components/comments'
 import { useDispatch, useSelector } from 'react-redux'
 import AxiosService from '../../../utils/axios'
 import { useRouter } from 'next/router'
+import House1 from '../../../assets/images/house1.jpeg'
 
 const { Text, Title } = Typography
 
@@ -94,7 +95,7 @@ const DetailHouseContent: NextPage<IProps> = props => {
         Thông tin chi tiết nhà trọ
         <br />
       </Text>
-      <Image src={RentOutImage} alt="House1" style={{ width: 800, height: 400 }} />
+      <Image src={House1} alt="House1" style={{ width: 800, height: 400 }} />
       <div>
         <Title ellipsis={{ rows: 1 }} className={styles.title2}>
           {rentNews.title}
