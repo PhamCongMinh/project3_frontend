@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import RentOutImage from '../../../assets/images/image_introduction_rentout.png'
 import styles from './style.module.scss'
-import { Breadcrumb, Button, Divider, Input, Rate, Typography } from 'antd'
+import { Breadcrumb, Button, Card, Col, Divider, Input, Rate, Row, Typography } from 'antd'
 import { HomeOutlined, UserOutlined } from '@ant-design/icons'
 import React, { useCallback, useState } from 'react'
 import { CommentType, RentNews } from '../../../types'
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AxiosService from '../../../utils/axios'
 import { useRouter } from 'next/router'
 import House1 from '../../../assets/images/house1.jpeg'
+import ConfirmationForm from './components/confirmation-form'
 
 const { Text, Title } = Typography
 
@@ -95,7 +96,26 @@ const DetailHouseContent: NextPage<IProps> = props => {
         Thông tin chi tiết nhà trọ
         <br />
       </Text>
-      <Image src={House1} alt="House1" style={{ width: 800, height: 400 }} />
+      <Row>
+        <Col span={14}>
+          <Image src={House1} alt="House1" style={{ width: 800, height: 400 }} />
+        </Col>
+        <Col span={6} offset={2}>
+          <Card title="" className={styles.card}>
+            <p className={styles.text2}>
+              - Nếu bạn đã tìm kiếm, liên hệ và thuê được nhà trọ trong hệ thống, hãy vui lòng cho chúng tôi biết
+            </p>
+            <p className={styles.text2}>
+              - Hãy điền vào form dưới đây để cho chúng tôi biết bạn đã thuê nhà trọ nào để chúng tôi có thể phục vụ tốt
+              hơn
+            </p>
+            <p className={styles.text2}>
+              - Trước đó bạn cần cập nhật đầy đủ thông tin cá nhân ở mục Quản lý tài khoản để có thể điền form này{' '}
+            </p>
+            <ConfirmationForm setReload={props.setReload} />
+          </Card>
+        </Col>
+      </Row>
       <div>
         <Title ellipsis={{ rows: 1 }} className={styles.title2}>
           {rentNews.title}
@@ -117,6 +137,10 @@ const DetailHouseContent: NextPage<IProps> = props => {
         </Text>
         <Text className={styles.price}>
           {'=> Diện tích: ' + rentNews.area + ' m2'}
+          <br />
+        </Text>
+        <Text className={styles.price}>
+          {'=> Mã tin đăng: ' + rentNews._id}
           <br />
         </Text>
         <Text className={styles.title3}>

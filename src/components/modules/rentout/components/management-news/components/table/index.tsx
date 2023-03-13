@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd'
+import { message, Space, Table, Tag } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { RentNews } from '../../../../../../../types'
 import { useEffect, useState } from 'react'
@@ -44,11 +44,13 @@ const RentalNewsTable: React.FC<IProps> = (props): JSX.Element => {
   const handleChangeStatusNews = async (news: DataType) => {
     const response = await axiosService.put(`/rent-out/${news._id}`, { status: 'rented' })
     console.log(response)
+    message.success(`Sửa tin thành công`)
     await props.reload()
   }
   const handleDeleteNews = async (news: DataType) => {
     const response = await axiosService.delete(`/rent-out/${news._id}`)
     console.log(response)
+    message.success(`Xóa tin thành công`)
     await props.reload()
   }
 

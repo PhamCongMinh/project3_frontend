@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authSliceActions } from '../../../store/auth/authSlice'
 import EditProfile from './components/edit-profile'
 import Contact from './components/contact'
+import EditAccount from './components/edit-account'
 
 type MenuItem = Required<MenuProps>['items'][number]
 const { Text } = Typography
@@ -29,7 +30,8 @@ function getItem(
 }
 
 const items: MenuProps['items'] = [
-  getItem('Sửa thông tin cá nhân', 'editProfile', <AppstoreOutlined />),
+  getItem('Cập nhật thông tin cá nhân', 'editProfile', <AppstoreOutlined />),
+  getItem('Cập nhật tài khoản', 'editAccount', <AppstoreOutlined />),
   getItem('Liên hệ', 'contact', <MailOutlined />),
   getItem('Thoát', 'logout', <SettingOutlined />)
 ]
@@ -95,6 +97,7 @@ function ManageAccountContent() {
             />
           </div>
           {selectedMenuItem === 'editProfile' && <EditProfile />}
+          {selectedMenuItem === 'editAccount' && <EditAccount />}
           {selectedMenuItem === 'contact' && (
             <div className={styles.contact}>
               <Contact />

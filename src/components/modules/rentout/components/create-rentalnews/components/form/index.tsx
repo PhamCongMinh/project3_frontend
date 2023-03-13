@@ -111,13 +111,28 @@ export default function RentOutForm() {
     }
   }
 
+  const checkUpdatedInfo = async () => {
+    const response = await axiosService.get('/auth/check-updated-information')
+    console.log(response)
+    return response.data.isUpdatedInfo
+  }
+
   const handleSubmit = async () => {
+    const isUpdatedInfo = await checkUpdatedInfo()
+    if (!isUpdatedInfo) {
+      alert(
+        'Bạn chưa cập nhật thêm thông tin cá nhân cần thiết, vui lòng truy cập mục Quản lý tài khoản -> Cập nhật thông tin cá nhân để cập nhật thêm thông tin'
+      )
+      return
+    }
+
     try {
       const formData = serialize(state)
       formData.append('image', image)
       console.log(formData)
       const response = await axiosService.post('/rent-out', formData)
       console.log(response)
+      message.success(`Tạo tin thành công`)
     } catch (error) {
       alert('Tạo tin thất bại, vui lòng kiểm tra lại thông tin trước khi thử lại')
       console.log(error)

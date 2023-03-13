@@ -89,7 +89,7 @@ export default function SignUpForm() {
         </Form.Item>
 
         <Form.Item>
-          <Input placeholder="Mật khẩu" onChange={e => handleChange('password', e)} />
+          <Input.Password placeholder="Mật khẩu" onChange={e => handleChange('password', e)} />
         </Form.Item>
 
         <Form.Item>
